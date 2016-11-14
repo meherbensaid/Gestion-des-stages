@@ -1,0 +1,61 @@
+﻿
+@{
+    ViewBag.Title = "Test";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Test</h2>
+
+    
+<body id="page-top">
+
+
+    <header>
+        <div class="header-content">
+            <div class="header-content-inner">
+                <h1>&lt;select&gt; popovers</h1>
+                <hr>
+                <p>A jQuery plugin to replace the traditional &lt;select&gt; box with a sleek Popover with options pre-populated. Better User interface than any other multiselects</p>
+                <form class="form form-horizontal">
+                    <div class="form-group m-t-4xl">
+                        <div class="col-xs-12">
+                            <div class="center-block" id="main-example-container">
+                                <select name="main-example" id="main-example" class="form-control">
+                                    <option value="India">India</option>
+                                    <option value="US">U.S.</option>
+                                    <option value="Germany">Germany</option>
+                                    <option value="UK">UK</option>
+                                    <option value="Australia" selected="selected">Australia</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </header>
+
+
+
+
+    <!-- Initilization Scripts -->
+    <script>
+    $(document).ready(function() {
+
+      // The Main Example on the Top
+      $('#main-example').popSelect({
+        placeholderText: 'Which countries have you travelled to ?',
+        showTitle: false
+        //autofocus: true
+      });
+
+   
+      // With Bottom Popover
+
+
+    });
+    </script>
+
+    <!-- Twitter Snippet -->
+
+</body>

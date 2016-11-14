@@ -1,0 +1,66 @@
+﻿@model GestionDesStages.Models.Stagiaire
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Stagiaire</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nom)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nom)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Prenom)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Prenom)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Age)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Age)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateDeNaissance)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateDeNaissance)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LieuDeNaissance)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LieuDeNaissance)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Student)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Student)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.StagiaireID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

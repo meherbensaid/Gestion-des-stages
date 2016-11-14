@@ -1,0 +1,128 @@
+﻿@model PagedList.IPagedList<GestionDesStages.Models.Stagiaire>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" /> 
+@{
+    ViewBag.Title = "AutoComplete";
+}
+@Scripts.Render("~/bundles/jquery-ui")
+
+
+
+
+<script>
+      $(function () {
+           $('#tags').autocomplete({
+              source: function (request, response) {
+                  $.ajax({
+                      url: '@Url.Action("AutoComplete")',
+                      dataType: "json",
+                      contentType: 'application/json, charset=utf-8',
+                      data: {
+                          search: $("#tags").val()
+                      },
+                      success: function (data) {
+
+                          response($.map(data, function (item) {
+                              return {
+                                  label: item
+                              };
+                          }));
+                      },
+                      error: function (xhr, status, error) {
+                          alert(error);
+                      }
+                  });
+              },
+              minLength: 2
+          });
+      });
+
+</script>
+
+
+
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+@using (Html.BeginForm("Index", "Stagiaire", FormMethod.Get)) 
+{
+    <div class="ui-widget">
+        <label for="tags">Tags: </label>
+        <input id="tags" name="tags" value=" @ViewBag.CurrentFilter"/>
+    </div>
+     <input type="submit" value="Search" />
+   
+}  
+
+    
+    <table class="table">
+        <tr>
+            <th>
+              Nom
+            </th>
+            <th>
+                Prenom
+            </th>
+            <th>
+               Age
+            </th>
+            <th>
+                DateDeNaissance
+            </th>
+            <th>
+                LieuDeNaissance
+            </th>
+            <th>
+                Student
+            </th>
+            <th>
+                Stage
+            </th>
+
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Prenom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Age)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateDeNaissance)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LieuDeNaissance)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Student)
+                </td>
+                <td>
+                    @foreach (var stage in item.Stages)
+                    {
+                        @Html.ActionLink("Details ", "ViewLyubomir", "Stagiaire", new { id = stage.StageID }, new {  @class = "modal-link btn btn-success" })
+                        @*@Html.DisplayFor(modelItem => stage.Nom)    @:</br>*@
+    }
+                </td>
+
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.StagiaireID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.StagiaireID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.StagiaireID })
+                </td>
+            </tr>
+        }
+
+    </table>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model,
+    page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+

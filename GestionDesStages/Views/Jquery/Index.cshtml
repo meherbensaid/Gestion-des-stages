@@ -1,0 +1,36 @@
+﻿@Scripts.Render("~/bundles/jquery-ui")
+<h2>jQuery AutoComplete</h2>
+<script>
+      $(function () {
+           $('#tags').autocomplete({
+              source: function (request, response) {
+                  $.ajax({
+                      url: '@Url.Action("AutoComplete")',
+                      dataType: "json",
+                      contentType: 'application/json, charset=utf-8',
+                      data: {
+                          search: $("#tags").val()
+                      },
+                      success: function (data) {
+
+                          response($.map(data, function (item) {
+                              return {
+                                  label: item
+                              };
+                          }));
+                      },
+                      error: function (xhr, status, error) {
+                          alert(error);
+                      }
+                  });
+              },
+              minLength: 2
+          });
+      });
+
+</script>
+
+<div class="ui-widget">
+    <label for="tags">Tags: </label>
+    <input id="tags" />
+</div>

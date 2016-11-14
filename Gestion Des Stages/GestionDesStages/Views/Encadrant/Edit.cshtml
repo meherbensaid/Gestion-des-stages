@@ -1,0 +1,189 @@
+﻿@model GestionDesStages.Models.Encadrant
+@using GestionDesStages.ViewModels
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Encadrant</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.EncadrantID)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Nom, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Nom, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Nom, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Prenom, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Prenom, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Prenom, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DateEmbauche, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DateEmbauche, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DateEmbauche, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Bureau.Localisation, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Bureau.Localisation)
+                @Html.ValidationMessageFor(model => model.Bureau.Localisation)
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Password, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
+                
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+               
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="StageID">Stages</label>
+            <div class="col-md-10">
+                @Html.DropDownList("StageID", (MultiSelectList)ViewBag.StageID, new { @class = "form-control", multiple = "multiple" })
+                @Html.ValidationMessageFor(model => model.Stages.FirstOrDefault().StageID)
+            </div>
+        </div>
+
+        @*<div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <table>
+                    <tr>
+                        @{
+
+                            int cnt = 0;
+                            List<GestionDesStages.ViewModels.AssignedStageData> stages = ViewBag.stages;
+
+
+                            foreach (var stage in stages)
+                            {
+                                if (cnt++ % 3 == 0)
+                                {
+                                    @:
+                                </tr>
+                                <tr>
+                                   }
+                                @:
+                                <td>
+
+
+
+
+                                    <input type="checkbox" name="selectedStages"
+                                           value="@stage.StageID"
+                                           @(Html.Raw(stage.Assigned ? "checked=\"checked\"" : "")) />
+                                        @stage.StageID @:  @stage.Titre
+                                        @:
+                                    </td>
+                                                                               }
+                            @:
+                        </tr>
+                        }
+                    </table>
+                </div>
+            </div>*@
+
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+                            }
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+
+
+
+
+        $(document).ready(function () {
+
+
+
+
+            @{
+            IEnumerable<AssignedStageData> Stages = ViewBag.stages;
+
+
+}
+
+            $("#StageID option").each(function () {
+
+
+                @foreach (var item in Stages)
+                {
+
+                    <text>
+
+                if (("@item.Assigned" == "True") && ($(this).text()=="@item.Titre")) {
+                        var t = $(this).text();
+                        $(this).attr("selected", "selected");
+
+                    }
+
+
+                    </text>
+                }
+
+
+            });
+
+
+
+
+
+            // The Main Example on the Top
+            $('#StageID').popSelect({
+                placeholderText: 'Stages',
+                showTitle: false
+                //autofocus: true
+            });
+
+
+            // With Bottom Popover
+
+
+        });
+    </script>
+
+
+}

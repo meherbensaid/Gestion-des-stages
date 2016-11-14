@@ -1,0 +1,93 @@
+﻿@model IEnumerable<GestionDesStages.Models.Stage>
+
+@{
+    ViewBag.Title = "Stage";
+}
+
+<h2>Liste Des Stages</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    
+    <tr>
+        <th>
+            @Html.ActionLink("Nom", "Index", new { sortOrder = ViewBag.NameSortParm })
+        </th>
+       
+        <th>
+            @Html.ActionLink("Date de Debut", "Index", new { sortOrder = ViewBag.DateSortParm })
+        </th>
+        
+   
+    <th>
+        @Html.DisplayNameFor(model => model.DateFin)
+    </th>
+    <th>
+        @Html.DisplayNameFor(model => model.Type)
+    </th>
+    <th>
+        @Html.DisplayNameFor(model => model.valide)
+    </th>
+    <th>
+        Departement
+    </th>
+        <th>
+            Encadrants
+        </th>
+        <th>
+            Sujet
+        </th>
+
+    <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateDebut)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateFin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.valide)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Departement.Nom)
+            </td>
+
+            <td>
+                @foreach( var encadarant in item.Encadrants)
+                {
+                    @Html.ActionLink(encadarant.Prenom,"Details","Encadrant",new { id = encadarant.EncadrantID },null)@:</br>
+                   
+                   
+
+                }
+            </td>
+            <td>
+                @if (item.Sujet != null) { 
+                @Html.ActionLink(item.Sujet.Description, "Details", "Sujet", new { id = item.StageID }, null)
+                }
+            </td>
+            <td>
+               
+                 
+                @Html.ActionLink("Edit", "Edit", new { id = item.StageID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.StageID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.StageID })
+            </td>
+        </tr>
+    }
+
+</table>

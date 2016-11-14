@@ -1,0 +1,139 @@
+﻿@model GestionDesStages.ViewModels.EncadrantIndexData
+
+@{
+    ViewBag.Title = "Encadrants";
+}
+
+<h2>Encadrants</h2>
+<script src="~/Scripts/jquery-1.4.4.js"></script>
+<script src="~/Scripts/jquery-ui-1.9.2.custom.js"></script>
+<link href="~/Content/jquery-ui-1.9.2.custom.css" rel="stylesheet" />
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Nom
+        </th>
+        <th>
+            Prenom
+        </th>
+        <th>
+            Date d'Embauche
+        </th>
+        <th>Bureau</th>
+        <th>Stages</th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model.Encadrants)
+    {
+        string selectedRow = "";
+        if (item.EncadrantID == ViewBag.EncadrantID)
+        {
+            selectedRow = "success";
+        }
+        <tr class="@selectedRow">
+            <td>                 @Html.DisplayFor(modelItem => item.Nom)             </td>
+            <td>                 @Html.DisplayFor(modelItem => item.Prenom)             </td>
+            <td>                 @Html.DisplayFor(modelItem => item.DateEmbauche)             </td>
+            <td>
+                @if (item.Bureau != null)
+                {                     @item.Bureau.Localisation                 }
+            </td>
+
+          
+            <td>
+                @{
+                    foreach (var stage in item.Stages)
+                    {
+                        @stage.Nom @:  <br />
+                       }
+                }
+            </td>
+
+           
+
+            <td>
+                @Html.ActionLink("Select", "Index", new { id = item.EncadrantID }) |
+                @Html.ActionLink("Edit", "Edit", new { id = item.EncadrantID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.EncadrantID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.EncadrantID })
+            </td>
+        </tr>
+    }
+
+
+</table>
+
+
+@if (Model.Stages != null)
+{
+    <h3>Les stages associés à cet encadrant</h3>
+    <table class="table">
+        <tr>
+            <th></th>
+            <th>Nom</th>
+            <th>Date Debut</th>
+            <th>Date Fin</th>
+            <th>Type</th>
+            <th>Valide</th>
+            <th>Departement</th>
+
+        </tr>
+        @foreach (var item in Model.Stages)
+        {
+            string selectedRow = "";
+            if (item.StageID == ViewBag.StageID)
+            {
+                selectedRow = "success";
+            }
+            <tr class="@selectedRow">
+                <td>
+                    @Html.ActionLink("Select", "Index", new { stageID = item.StageID })
+                </td>
+                <td>                     @item.Nom                 </td>
+                <td>                     @item.DateDebut.Date.ToShortDateString()                    </td>
+                <td>                     @item.DateFin.Date.ToShortDateString()                </td>
+                <td>                     @item.Type                 </td>
+                <td>                     @item.valide                 </td>
+                <td>                     @item.Departement.Nom                </td>
+
+            </tr>         }
+    </table> }
+
+
+
+@if (Model.Stagiaires != null)
+{
+    <h3>         Stagiaires      </h3>
+    <table class="table">
+        <tr>
+            <th>Nom</th>
+            <th>Prenom</th>
+
+            <th>Age</th>
+            <th>Etudiant ?</th>
+           
+
+        </tr>
+        @foreach (var item in Model.Stagiaires)
+        {
+            <tr>
+                <td>
+                    @item.Nom
+                </td>
+                <td>
+                    @item.Prenom
+                </td>
+                <td>
+                    @item.Age
+                </td>
+                <td>
+                    @item.Student
+                </td>
+               
+            </tr>
+            }
+        </table>
+                        }
